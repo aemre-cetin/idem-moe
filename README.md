@@ -12,7 +12,8 @@
 [![Commercialization Strategy](https://img.shields.io/badge/commercialization-strategy-gold.svg)](./commercialization.md)
 
 
-> **Eliminate 100% of auxiliary VRAM allocations during Sparse Mixture-of-Experts (MoE) token dispatching and capacity dropping in Mixtral, DeepSeek, Megatron-LM, and Hugging Face models.**
+> **Eliminate 100% of auxiliary VRAM allocations during Sparse Mixture-of-Experts (MoE) token dispatching and capacity dropping in Mixtral, DeepSeek, Megatron-LM, and Hugging Face models.**  
+> 🌟 **Interactive Live Showcase:** [huggingface.co/spaces/aecetin/idempotent-ai-showcase](https://huggingface.co/spaces/aecetin/idempotent-ai-showcase)
 
 ---
 
