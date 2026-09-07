@@ -9,6 +9,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Hardware](https://img.shields.io/badge/Tested%20on-NVIDIA%20Blackwell%20sm__120-purple.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)]()
+[![Commercialization Strategy](https://img.shields.io/badge/commercialization-strategy-gold.svg)](./commercialization.md)
 
 
 > **Eliminate 100% of auxiliary VRAM allocations during Sparse Mixture-of-Experts (MoE) token dispatching and capacity dropping in Mixtral, DeepSeek, Megatron-LM, and Hugging Face models.**
@@ -137,3 +138,18 @@ Academic evaluation, non-commercial research, and open-source collaboration are 
 
 Licensed under the [Apache License, Version 2.0](LICENSE).
 Copyright © 2026 Dr. A. Emre ÇETİN. All Rights Reserved.
+
+---
+
+## 📄 Scientific Publication
+
+The theoretical foundations, mathematical proofs, and hardware benchmarks on NVIDIA Blackwell (`sm_120`) are published in:
+* **Research Paper:** [`idempotent_moe_paper.pdf`](paper/idempotent_moe_paper.pdf)
+* **Patent Application:** Protected under U.S. Patent Application No.: `64/148,668` (*Confirmation No. 5890*).
+* **Inventor:** Dr. A. Emre ÇETİN (`aemre.cetin@gmail.com`).
+
+---
+
+## 💼 Commercialization & Enterprise Licensing
+
+Institutional investor pitch, enterprise ROI analysis, TAM/SAM/SOM market sizing, and multi-year commercialization roadmap are detailed in [commercialization.md](./commercialization.md).
