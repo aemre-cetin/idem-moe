@@ -1,10 +1,10 @@
-﻿"""
+"""
 idempotent-moe: Hardware-Accelerated Zero-Copy In-Place Token Router for Sparse Mixture-of-Experts (MoE)
 Protected under U.S. Patent Application No. 64/148,668 ("Patent Pending").
 Author: Dr. A. Emre ÇETİN
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Dr. A. Emre ÇETİN"
 __patent__ = "U.S. Patent Application No. 64/148,668 (Patent Pending)"
 

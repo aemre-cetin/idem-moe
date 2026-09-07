@@ -1,4 +1,4 @@
-﻿import torch
+import torch
 import triton
 import triton.language as tl
 
@@ -77,18 +77,32 @@ def _inplace_moe_router_compact_kernel(
                             curr_slot = next_slot
 
 
-def compact_moe_tokens_inplace(tokens: torch.Tensor, target_map: torch.Tensor, block_d: int = 128) -> None:
+def compact_moe_tokens_inplace(
+    tokens: torch.Tensor,
+    target_map: torch.Tensor,
+    block_d: int = 128,
+    prefer_native: bool = True
+) -> None:
     """
     In-Place Zero-Copy MoE Token Router and Capacity Compactor.
-    Rearranges expert candidate tokens in-place using O(1) auxiliary scalar registers.
+    Dispatches to native C++20 / Blackwell CUDA engine (idempotent-core) or Triton JIT.
 
     Args:
-        tokens:     Tensor of shape [E, N, D] (float16 or float32)
-        target_map: Tensor of shape [E, N] (int32) containing the idempotent permutation map
-        block_d:    Tile size along hidden dimension (default: 128)
+        tokens:        Tensor of shape [E, N, D] (float16 or float32)
+        target_map:    Tensor of shape [E, N] (int32) containing the idempotent permutation map
+        block_d:       Tile size along hidden dimension for Triton (default: 128)
+        prefer_native: Whether to dispatch to native C++20/CUDA kernel
     """
     assert tokens.is_contiguous(), "Tokens tensor must be contiguous"
     assert target_map.is_contiguous(), "TargetMap tensor must be contiguous"
+
+    if prefer_native:
+        try:
+            import idempotent_core
+            idempotent_core.compact_inplace(tokens, target_map)
+            return
+        except Exception:
+            pass
 
     E, N, D = tokens.shape
     assert D % block_d == 0, f"Hidden dimension D ({D}) must be divisible by block_d ({block_d})"
