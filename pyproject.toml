@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "idempotent-moe"
-version = "0.2.0"
+version = "0.2.1"
 description = "Zero-Copy Sparse MoE Dynamic Token Router for Deep Learning Accelerators"
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -33,9 +33,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/aemre-cetin/idempotent-moe"
-Repository = "https://github.com/aemre-cetin/idempotent-moe"
-Documentation = "https://github.com/aemre-cetin/idempotent-moe#readme"
+Homepage = "https://github.com/aemre-cetin/idem-moe"
+Repository = "https://github.com/aemre-cetin/idem-moe"
+Documentation = "https://github.com/aemre-cetin/idem-moe#readme"
 
 [tool.setuptools.packages.find]
 where = ["src"]

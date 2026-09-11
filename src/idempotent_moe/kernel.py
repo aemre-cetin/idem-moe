@@ -1,7 +1,44 @@
 import torch
-import triton
-import triton.language as tl
 
+try:
+    import triton
+    import triton.language as tl
+    HAS_TRITON = True
+except (ImportError, ModuleNotFoundError):
+    HAS_TRITON = False
+    class _DummyKernel:
+        def __init__(self, fn):
+            self.fn = fn
+        def __getitem__(self, grid):
+            return self
+        def __call__(self, *args, **kwargs):
+            return None
+
+    class _DummyTriton:
+        @staticmethod
+        def jit(fn=None, **kwargs):
+            if fn is None:
+                return lambda f: _DummyKernel(f)
+            return _DummyKernel(fn)
+        @staticmethod
+        def cdiv(a, b):
+            return (a + b - 1) // b
+    triton = _DummyTriton()
+    class _DummyTL:
+        constexpr = int
+        @staticmethod
+        def program_id(dim):
+            return 0
+        @staticmethod
+        def arange(start, end):
+            return []
+        @staticmethod
+        def load(ptr):
+            return 0
+        @staticmethod
+        def store(ptr, val):
+            pass
+    tl = _DummyTL()
 @triton.jit
 def _inplace_moe_router_compact_kernel(
     Tokens_ptr,         # [E, N, D]
@@ -107,13 +144,24 @@ def compact_moe_tokens_inplace(
     E, N, D = tokens.shape
     assert D % block_d == 0, f"Hidden dimension D ({D}) must be divisible by block_d ({block_d})"
 
-    num_d_blocks = D // block_d
-    grid = (E, num_d_blocks)
+    if HAS_TRITON and tokens.is_cuda and _inplace_moe_router_compact_kernel is not None:
+        num_d_blocks = D // block_d
+        grid = (E, num_d_blocks)
+        _inplace_moe_router_compact_kernel[grid](
+            tokens, target_map,
+            tokens.stride(0), tokens.stride(1), tokens.stride(2),
+            target_map.stride(0), target_map.stride(1),
+            N=N,
+            BLOCK_D=block_d
+        )
+        return
 
-    _inplace_moe_router_compact_kernel[grid](
-        tokens, target_map,
-        tokens.stride(0), tokens.stride(1), tokens.stride(2),
-        target_map.stride(0), target_map.stride(1),
-        N=N,
-        BLOCK_D=block_d
-    )
+    # Pure PyTorch in-situ fallback (CPU, macOS MPS, or non-Triton platforms)
+    t_map = target_map.view(E, N)
+    for e in range(E):
+        for i in range(N):
+            dest = int(t_map[e, i].item())
+            if dest > i and int(t_map[e, dest].item()) == i:
+                tmp = tokens[e, i].clone()
+                tokens[e, i] = tokens[e, dest]
+                tokens[e, dest] = tmp

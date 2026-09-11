@@ -1,0 +1,65 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{jiang2024mixtral,deepseek2024deepseek,fedus2022switch}
+\citation{lepikhin2020gshard}
+\citation{shoeybi2019megatron,rajbhandari2022deepspeed}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{cetin2013idempotent}
+\citation{knuth1998art}
+\citation{cetin2013insitu,cetin2013inplace,cetin2012improved}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Problem Formulation and Algebraic Foundation}{2}{section.2}\protected@file@percent }
+\newlabel{sec:formulation}{{2}{2}{Problem Formulation and Algebraic Foundation}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}MoE Token Buffer Representation}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Idempotent Permutation Mapping}{2}{subsection.2.2}\protected@file@percent }
+\newlabel{eq:idempotence}{{4}{2}{Idempotent Capacity Map}{equation.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Disjoint Cycle Decomposition}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}The In-Place Token Compaction Algorithm}{2}{section.3}\protected@file@percent }
+\newlabel{sec:algorithm}{{3}{2}{The In-Place Token Compaction Algorithm}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Bitmask-Free Cycle Leader Identification}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Transposition (2-Cycle) Fast-Path}{2}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Hardware Architecture and GPU Implementation}{2}{section.4}\protected@file@percent }
+\newlabel{sec:hardware}{{4}{2}{Hardware Architecture and GPU Implementation}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}2D Parallel Grid and Thread Organization}{2}{subsection.4.1}\protected@file@percent }
+\citation{lepikhin2020gshard}
+\citation{fedus2022switch}
+\citation{jiang2024mixtral}
+\citation{rajbhandari2022deepspeed}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces In-place 2-cycle token transposition fast-path. Low-affinity token $t_i$ in active capacity $[0, C-1]$ and high-affinity token $t_j$ in tail $[C, N-1]$ are exchanged directly inside GPU scalar registers with $O(1)$ auxiliary storage, consolidating active tokens contiguously for Tensor Core GEMM and distributed All-to-All collective dispatch.}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:swap}{{1}{3}{In-place 2-cycle token transposition fast-path. Low-affinity token $t_i$ in active capacity $[0, C-1]$ and high-affinity token $t_j$ in tail $[C, N-1]$ are exchanged directly inside GPU scalar registers with $O(1)$ auxiliary storage, consolidating active tokens contiguously for Tensor Core GEMM and distributed All-to-All collective dispatch}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Evaluation}{3}{section.5}\protected@file@percent }
+\newlabel{sec:eval}{{5}{3}{Experimental Evaluation}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Experimental Setup}{3}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Memory Overhead Elimination}{3}{subsection.5.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Zero-Copy In-Place MoE Token Compaction}}{3}{algorithm.1}\protected@file@percent }
+\newlabel{alg:moe_compact}{{1}{3}{Transposition (2-Cycle) Fast-Path}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Latency and Throughput Acceleration}{3}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Numerical Correctness and Stability}{3}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Related Work}{3}{section.6}\protected@file@percent }
+\newlabel{sec:related}{{6}{3}{Related Work}{section.6}{}}
+\citation{knuth1998art}
+\citation{macleod1970inversion}
+\citation{fich1995permuting}
+\citation{cetin2013idempotent,cetin2013insitu,cetin2013inplace,cetin2012improved}
+\bibstyle{plain}
+\bibdata{references}
+\bibcite{cetin2012improved}{1}
+\bibcite{cetin2013idempotent}{2}
+\bibcite{cetin2013inplace}{3}
+\bibcite{cetin2013insitu}{4}
+\bibcite{deepseek2024deepseek}{5}
+\bibcite{fedus2022switch}{6}
+\bibcite{fich1995permuting}{7}
+\bibcite{jiang2024mixtral}{8}
+\bibcite{knuth1998art}{9}
+\bibcite{lepikhin2020gshard}{10}
+\bibcite{macleod1970inversion}{11}
+\bibcite{rajbhandari2022deepspeed}{12}
+\bibcite{shoeybi2019megatron}{13}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Empirical Hardware Performance Comparison of Mixture-of-Experts Token Routing on NVIDIA Blackwell Architecture (\texttt  {sm\_120})}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:results}{{1}{4}{Empirical Hardware Performance Comparison of Mixture-of-Experts Token Routing on NVIDIA Blackwell Architecture (\texttt {sm\_120})}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{4}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{7}{4}{Conclusion}{section.7}{}}
+\gdef \@abspage@last{4}

@@ -54,7 +54,7 @@ Standard deep learning frameworks (Megatron-LM, DeepSpeed-MoE, PyTorch native) i
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/aemre-cetin/idempotent-moe.git
+git clone https://github.com/aemre-cetin/idem-moe.git
 cd idempotent-moe
 pip install -e .
 ```

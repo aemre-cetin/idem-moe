@@ -15,7 +15,7 @@
   `cs.DC` (Distributed, Computing, and Cluster Computing), `cs.AI` (Artificial Intelligence), `cs.AR` (Hardware Architecture)
 
 - **Comments:**
-  4 pages, 3 figures. Reference implementation and Triton kernels available at https://github.com/aemre-cetin/idempotent-moe. Protected under U.S. Patent Application No. 64/148,668.
+  4 pages, 1 figure, 1 table, 1 algorithm. Reference implementation and Triton kernels available at https://github.com/aemre-cetin/idem-moe. Protected under U.S. Patent Application No. 64/148,668.
 
 - **ACM Classification:**
   C.1.4; I.2.7; B.3.2
@@ -50,6 +50,6 @@ Sparse Mixture-of-Experts (MoE) architectures, such as Mixtral, DeepSeek-V2/V3, 
   U.S. Patent Application No. 64/148,668 ("Patent Pending", Confirmation No. 5890).
 
 - **Associated Links:**
-  - GitHub Repository: https://github.com/aemre-cetin/idempotent-moe
+  - GitHub Repository: https://github.com/aemre-cetin/idem-moe
   - PyPI Package: https://pypi.org/project/idempotent-moe/
   - Hugging Face Transformers RFC: https://github.com/huggingface/transformers/issues/48548
