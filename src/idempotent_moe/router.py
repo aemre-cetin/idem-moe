@@ -1,4 +1,4 @@
-﻿import torch
+import torch
 import torch.nn as nn
 from typing import Tuple, Optional
 from .kernel import compact_moe_tokens_inplace
@@ -53,7 +53,13 @@ class InplaceMoERouter(nn.Module):
         self.num_experts = num_experts
         self.block_d = block_d
 
-    def forward(self, hidden_states: torch.Tensor, routing_scores: torch.Tensor, expert_capacity: int) -> torch.Tensor:
+    def forward(
+        self,
+        hidden_states: torch.Tensor,
+        routing_scores: torch.Tensor,
+        expert_capacity: int,
+        engine: str = "classic"
+    ) -> torch.Tensor:
         """
         Routes and compacts candidate tokens in-place to expert partitions.
 
@@ -61,6 +67,7 @@ class InplaceMoERouter(nn.Module):
             hidden_states:   [E, N, D] token activations partitioned by expert
             routing_scores:  [E, N] gating affinity scores
             expert_capacity: Max tokens to retain per expert (C)
+            engine:          'classic' (in-situ transposition) or 'permnet' (Borda rank consensus)
 
         Returns:
             Compacted active view: hidden_states[:, :expert_capacity, :]
@@ -70,7 +77,12 @@ class InplaceMoERouter(nn.Module):
         device = hidden_states.device
 
         # 1. Generate idempotent target permutation map f(x)
-        target_map = generate_idempotent_moe_map(routing_scores, expert_capacity, device=device)
+        if engine == "permnet":
+            # Discrete Borda Rank Invariant Gating:
+            ranks = torch.argsort(torch.argsort(routing_scores, dim=-1), dim=-1)
+            target_map = generate_idempotent_moe_map(ranks.to(torch.float32), expert_capacity, device=device)
+        else:
+            target_map = generate_idempotent_moe_map(routing_scores, expert_capacity, device=device)
 
         # 2. Execute in-situ zero-copy routing
         compact_moe_tokens_inplace(hidden_states, target_map, block_d=self.block_d)
